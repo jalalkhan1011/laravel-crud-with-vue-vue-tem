@@ -1,6 +1,7 @@
 import Home from './Pages/Home.vue';
 import PostList from './Pages/post/index.vue';
 import PostCreate from './Pages/post/create.vue';
+import PostEdit from './Pages/post/edit.vue';
 export const routes= [
     {
         path: "/", 
@@ -16,5 +17,10 @@ export const routes= [
         path: "/posts/create",
         name: "post.create",
         component: PostCreate,
+    },
+    {
+        path: "/posts/:id/edit",
+        name: "post.edit",
+        component: PostEdit,
     }
 ];

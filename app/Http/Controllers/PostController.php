@@ -11,7 +11,7 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::all();
-        return response(['status'=>'success','posts' => $posts, 'code' => '200']);
+        return response(['status' => 'success', 'posts' => $posts, 'code' => '200']);
     }
 
     public function store(Request $request)
@@ -21,6 +21,24 @@ class PostController extends Controller
             'description' => 'required',
         ]);
         $post = Post::create($request->all());
-        return response(['status'=>'success','post' => $post, 'code' => '200']);
+        return response(['status' => 'success', 'post' => $post, 'code' => '200']);
+    }
+
+    public function edit($id)
+    {
+        $post = Post::find($id);
+        return response(['status' => 'success', 'post' => $post, 'code' => '200']);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $post = Post::find($id);
+        
+        $request->validate([
+            'title' => 'required',
+            'description' => 'required',
+        ]);
+        $post->update($request->all());
+        return response(['status' => 'success', 'post' => $post, 'code' => '200']);
     }
 }

@@ -31,7 +31,11 @@
                   <td>{{ post.title }}</td>
                   <td>{{ post.description }}</td>
                   <td>
-                    <a href="#" class="btn btn-primary">Edit</a>
+                    <router-link
+                      :to="{ name: 'post.edit', params: { id: post.id } }"
+                      class="btn btn-primary"
+                      >Edit</router-link
+                    >
                     <a href="#" class="btn btn-danger">Delete</a>
                   </td>
                 </tr>

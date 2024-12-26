@@ -10,3 +10,5 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/posts', [PostController::class, 'index']);
 Route::post('/posts', [PostController::class, 'store']);
+Route::get('/posts/{id}/edit', [PostController::class, 'edit']);
+Route::put('/posts/{id}', [PostController::class, 'update']);
