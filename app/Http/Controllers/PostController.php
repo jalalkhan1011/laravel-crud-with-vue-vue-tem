@@ -41,4 +41,11 @@ class PostController extends Controller
         $post->update($request->all());
         return response(['status' => 'success', 'post' => $post, 'code' => '200']);
     }
+
+    public function destroy($id)
+    {
+        $post = Post::find($id);
+        $post->delete();
+        return response(['status' => 'success', 'post' => $post, 'code' => '200']);
+    }
 }

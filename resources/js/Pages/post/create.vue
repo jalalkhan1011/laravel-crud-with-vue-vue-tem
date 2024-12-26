@@ -64,6 +64,7 @@ export default {
         let res = await axios.post("/api/posts", this.post);
         toastr.success("Post created successfully");
         this.post = {};
+        this.$router.push({ name: "post" });
       } catch (error) {
         let errors = error.response.data.errors;
         for (let key in errors) {

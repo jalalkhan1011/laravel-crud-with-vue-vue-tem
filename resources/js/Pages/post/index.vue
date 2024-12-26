@@ -32,11 +32,16 @@
                   <td>{{ post.description }}</td>
                   <td>
                     <router-link
-                      :to="{ name: 'post.edit', params: { id: post.id } }"
+                      :to="{
+                        name: 'post.edit',
+                        params: { id: post.id },
+                      }"
                       class="btn btn-primary"
                       >Edit</router-link
                     >
-                    <a href="#" class="btn btn-danger">Delete</a>
+                    <button v-on:click="deletePost(post.id)" class="btn btn-danger">
+                      Delete
+                    </button>
                   </td>
                 </tr>
               </tbody>
@@ -66,10 +71,11 @@ export default {
       let res = await axios.get("/api/posts");
       this.posts = res.data.posts;
     },
+
     async deletePost(id) {
-      let res = await axios.delete(`/api/posts/delete/${id}`);
+      let res = await axios.delete(`/api/posts/${id}`);
       this.getPosts();
-      toastr.success(res.data.message);
+      toastr.error("Post delete successfully");
     },
   },
 };
