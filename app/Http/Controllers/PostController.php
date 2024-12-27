@@ -8,6 +8,11 @@ use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth']);
+    }
+    
     public function index()
     {
         $posts = Post::all();
@@ -33,7 +38,7 @@ class PostController extends Controller
     public function update(Request $request, $id)
     {
         $post = Post::find($id);
-        
+
         $request->validate([
             'title' => 'required',
             'description' => 'required',
