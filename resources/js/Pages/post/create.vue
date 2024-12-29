@@ -26,6 +26,39 @@
                   class="form-control"
                   name="title"
                   v-model="post.title"
+                  @input="handleInput"
+                  @change="handleChange"
+                />
+              </div>
+              <div class="form-group">
+                <label for="number_1">Number 1</label
+                ><input
+                  type="number"
+                  class="form-control"
+                  name="number_1"
+                  v-model="post.number_1"
+                  @input="handleInputNumber"
+                />
+              </div>
+              <div class="form-group">
+                <label for="number_2">Number 2</label
+                ><input
+                  type="number"
+                  class="form-control"
+                  name="number_2"
+                  v-model="post.number_2"
+                  @input="handleInputNumber"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="total_number">Total</label
+                ><input
+                  type="number"
+                  class="form-control"
+                  name="total_number"
+                  :value="sum"
+                  readonly
                 />
               </div>
               <div class="form-group">
@@ -38,6 +71,7 @@
                 >
                 </textarea>
               </div>
+
               <div class="form-group mt-2 text-end">
                 <button class="btn btn-primary" v-on:click="createPost()">Submit</button>
               </div>
@@ -51,14 +85,30 @@
 <script>
 import axios from "axios";
 import toastr from "toastr";
+
 export default {
   name: "Posts",
   data() {
     return {
       post: {},
+      sum: 0,
     };
   },
+
   methods: {
+    handleInput(event) {
+      let handleInput = event.target.value;
+      console.log(handleInput);
+    },
+    handleChange(event) {
+      let handleChange = event.target.value;
+      console.log(handleChange);
+    },
+    handleInputNumber() {
+      return (this.sum = parseInt(this.post.number_1) + parseInt(this.post.number_2));
+      console.log(this.sum);
+    },
+
     async createPost() {
       try {
         let res = await axios.post("/api/posts", this.post);
