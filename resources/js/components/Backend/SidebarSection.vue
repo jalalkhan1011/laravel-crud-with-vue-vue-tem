@@ -29,7 +29,9 @@
           >
             <nav class="sb-sidenav-menu-nested nav">
               <router-link class="nav-link" :to="{ name: 'post' }">Post</router-link>
-              <a class="nav-link" href="layout-sidenav-light.html">Light Sidenav</a>
+              <router-link class="nav-link" :to="{ name: 'daynamicTable' }"
+                >Daynamic table</router-link
+              >
             </nav>
           </div>
           <a
