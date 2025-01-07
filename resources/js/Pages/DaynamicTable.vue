@@ -31,11 +31,18 @@
                 />
               </td>
               <td>
-                <input
+                <!-- <input
                   type="text"
                   class="form-control"
                   v-model="invoice_product.product_name"
-                />
+                /> -->
+                <select class="form-select" v-model="invoice_product.product_id">
+                  <optgroup v-for="product in products" :key="product.id">
+                    <option :value="product.id">
+                      {{ product.product_name }}
+                    </option>
+                  </optgroup>
+                </select>
               </td>
               <td>
                 <input
@@ -114,15 +121,19 @@
   </div>
 </template>
 <script>
+import axios from "axios";
+import toastr from "toastr";
 export default {
-  name: "Posts",
+  name: "Produts",
   data() {
     return {
+      products: [],
       invoice_subtotal: 0,
       invoice_total: 0,
       invoice_tax: 5,
       invoice_products: [
         {
+          product_id: "",
           product_no: "",
           product_name: "",
           price: "",
@@ -132,8 +143,14 @@ export default {
       ],
     };
   },
-
+  mounted() {
+    this.getProducts();
+  },
   methods: {
+    async getProducts() {
+      let pro = await axios.get("/api/products");
+      this.products = pro.data.products;
+    },
     //daynamic table row
     addNewRow() {
       //   alert("Are you sure you want to add a new row?");
