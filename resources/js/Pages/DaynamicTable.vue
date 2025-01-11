@@ -31,19 +31,18 @@
                 />
               </td>
               <td>
-                <!-- <input
-                  type="text"
-                  class="form-control"
-                  v-model="invoice_product.product_name"
-                /> -->
                 <select
                   class="form-select"
                   v-model="invoice_product.product_id"
-                  @change="productIdChange(invoice_product, k)"
+                  @change="productIdChange(invoice_product)"
                 >
                   <option value="" selected disabled>Select Product</option>
-                  <option v-for="item in items" :key="item.id" :value="item.id">
-                    {{ item.product_name }}
+                  <option
+                    v-for="product in products"
+                    :key="product.id"
+                    :value="product.id"
+                  >
+                    {{ product.product_name }}
                   </option>
                 </select>
               </td>
@@ -130,7 +129,7 @@ export default {
   name: "Produts",
   data() {
     return {
-      items: [],
+      products: [],
       invoice_subtotal: 0,
       invoice_total: 0,
       invoice_tax: 5,
@@ -154,10 +153,10 @@ export default {
   methods: {
     async getProducts() {
       let pro = await axios.get("/api/products");
-      this.items = pro.data.items;
+      this.products = pro.data.products;
     },
     //data append daynamically product it wise( user table index and item id for every daynamic data append)
-    async productIdChange(invoice_product, k) {
+    async productIdChange(invoice_product) {
       let produtId = invoice_product.product_id;
 
       let productDetails = await axios.get("/api/products/details/" + produtId);
