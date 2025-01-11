@@ -21,10 +21,12 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        DB::table('users')->truncate();
         DB::table('products')->truncate();
         DB::table('product_purchases')->truncate();
 
         $this->call([
+            UserTableSeeder::class,
             ProductTableSeeder::class,
             ProductPurchaseTableSeeder::class,
         ]);

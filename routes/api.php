@@ -15,3 +15,4 @@ Route::get('/posts/{id}/edit', [PostController::class, 'edit']);
 Route::put('/posts/{id}', [PostController::class, 'update']);
 Route::delete('/posts/{id}', [PostController::class, 'destroy']);
 Route::get('/products', [ProductController::class, 'index']);
+Route::get('/products/details/{id}', [ProductController::class, 'productDetails']);

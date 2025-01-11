@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Http\Controllers\Controller;
+use App\Models\ProductPurchase;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -13,9 +14,17 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::all();
+        $items = Product::all();
        
-        return response(['status' => 'success', 'products' => $products, 'code' => '200']);
+        return response(['status' => 'success', 'items' => $items, 'code' => '200']);
+    }
+
+    public function productDetails($id)
+    {
+        // dd($id);
+        $product = ProductPurchase::findOrFail($id);
+        // dd($product);
+        return response(['status' => 'success', 'product' => $product, 'code' => '200']);
     }
 
     /**
