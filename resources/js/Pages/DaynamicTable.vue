@@ -7,6 +7,7 @@
             <tr>
               <th>#Sl</th>
               <th>Product Name</th>
+              <th>Batch</th>
               <th>Price</th>
               <th>Qty</th>
               <th>Total</th>
@@ -43,6 +44,22 @@
                     :value="product.id"
                   >
                     {{ product.product_name }}
+                  </option>
+                </select>
+              </td>
+              <td>
+                <select
+                  class="form-select"
+                  v-model="invoice_product.batech_id"
+                  @change="productBatechIdChange(invoice_product)"
+                >
+                  <option value="" selected disabled>Select Batech</option>
+                  <option
+                    v-for="batech in invoice_product.productBateches"
+                    :key="batech.uuid"
+                    :value="batech.uuid"
+                  >
+                    {{ batech.uuid }}
                   </option>
                 </select>
               </td>
@@ -130,6 +147,7 @@ export default {
   data() {
     return {
       products: [],
+      productBateches: [],
       invoice_subtotal: 0,
       invoice_total: 0,
       invoice_tax: 5,
@@ -137,6 +155,7 @@ export default {
       invoice_products: [
         {
           product_id: "",
+          batech_id: "",
           product_no: "",
           product_name: "",
           price: "",
@@ -155,11 +174,20 @@ export default {
       let pro = await axios.get("/api/products");
       this.products = pro.data.products;
     },
-    //data append daynamically product it wise( user table index and item id for every daynamic data append)
+    //daynamacally append proudct batech select option for every product wise id
     async productIdChange(invoice_product) {
       let produtId = invoice_product.product_id;
 
-      let productDetails = await axios.get("/api/products/details/" + produtId);
+      let productBatech = await axios.get("/api/products/bateches/" + produtId);
+
+      invoice_product.productBateches = productBatech.data.productBateches;
+    },
+
+    // data append daynamically product it wise( user table index and product uuid for every daynamic data append)
+    async productBatechIdChange(invoice_product) {
+      let batechId = invoice_product.batech_id;
+
+      let productDetails = await axios.get("/api/products/details/" + batechId);
 
       console.log(productDetails);
       invoice_product.price = productDetails.data.product.price;
