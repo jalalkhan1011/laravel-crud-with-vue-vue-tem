@@ -2,139 +2,146 @@
   <div class="container">
     <div class="row">
       <div class="col-md-12 col-lg-12">
-        <table class="table table-bordered mt-2">
-          <thead>
-            <tr>
-              <th>#Sl</th>
-              <th>Product Name</th>
-              <th>Batch</th>
-              <th>Price</th>
-              <th>Qty</th>
-              <th>Total</th>
-              <th>
-                <button
-                  type="button"
-                  class="btn btn-sm btn-info"
-                  v-on:click="addNewRow()"
-                >
-                  <i class="fa fa-plus"></i>
-                </button>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="(invoice_product, k) in invoice_products" :key="k">
-              <td>
-                <input
-                  type="text"
-                  class="form-control"
-                  v-model="invoice_product.product_no"
-                />
-              </td>
-              <td>
-                <select
-                  class="form-select"
-                  v-model="invoice_product.product_id"
-                  @change="productIdChange(invoice_product)"
-                >
-                  <option value="" selected disabled>Select Product</option>
-                  <option
-                    v-for="product in products"
-                    :key="product.id"
-                    :value="product.id"
+        <form action="">
+          <table class="table table-bordered mt-2">
+            <thead>
+              <tr>
+                <th>#Sl</th>
+                <th>Product Name</th>
+                <th>Batch</th>
+                <th>Price</th>
+                <th>Qty</th>
+                <th>Total</th>
+                <th>
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-info"
+                    v-on:click="addNewRow()"
                   >
-                    {{ product.product_name }}
-                  </option>
-                </select>
-              </td>
-              <td>
-                <select
-                  class="form-select"
-                  v-model="invoice_product.batech_id"
-                  @change="productBatechIdChange(invoice_product)"
-                >
-                  <option value="" selected disabled>Select Batech</option>
-                  <option
-                    v-for="batech in invoice_product.productBateches"
-                    :key="batech.uuid"
-                    :value="batech.uuid"
+                    <i class="fa fa-plus"></i>
+                  </button>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(invoice_product, k) in invoice_products" :key="k">
+                <td>
+                  <input
+                    type="text"
+                    class="form-control"
+                    v-model="invoice_product.product_no"
+                  />
+                </td>
+                <td>
+                  <select
+                    class="form-select"
+                    v-model="invoice_product.product_id"
+                    @change="productIdChange(invoice_product)"
                   >
-                    {{ batech.uuid }}
-                  </option>
-                </select>
-              </td>
-              <td>
-                <input
-                  type="number"
-                  class="form-control text-right"
-                  min="0"
-                  step=".01"
-                  v-model="invoice_product.price"
-                  @change="calculateLineTotal(invoice_product)"
-                />
-              </td>
-              <td>
-                <input
-                  type="number"
-                  class="form-control text-right"
-                  min="0"
-                  step=".01"
-                  v-model="invoice_product.qty"
-                  @change="calculateLineTotal(invoice_product)"
-                />
-              </td>
-              <td>
-                <input
-                  type="number"
-                  class="form-control"
-                  min="0"
-                  step=".01"
-                  v-model="invoice_product.total"
-                  readonly
-                />
-              </td>
-              <td>
-                <button
-                  type="button"
-                  class="btn btn-sm btn-danger"
-                  v-on:click="deleteRow(k, invoice_product)"
-                >
-                  <i class="fa fa-trash"></i>
-                </button>
-              </td>
-            </tr>
-          </tbody>
-          <tfoot>
-            <tr>
-              <td colspan="4" class="text-end">Subtotal:</td>
-              <td>
-                <input
-                  type="number"
-                  class="form-control"
-                  min="0"
-                  step=".01"
-                  v-model="invoice_subtotal"
-                  readonly
-                />
-              </td>
-              <td></td>
-            </tr>
-            <tr>
-              <td colspan="4" class="text-end">Total:</td>
-              <td>
-                <input
-                  type="number"
-                  class="form-control"
-                  min="0"
-                  step=".01"
-                  v-model="invoice_total"
-                  readonly
-                />
-              </td>
-              <td></td>
-            </tr>
-          </tfoot>
-        </table>
+                    <option value="" selected disabled>Select Product</option>
+                    <option
+                      v-for="product in products"
+                      :key="product.id"
+                      :value="product.id"
+                    >
+                      {{ product.product_name }}
+                    </option>
+                  </select>
+                </td>
+                <td>
+                  <select
+                    class="form-select"
+                    v-model="invoice_product.batech_id"
+                    @change="productBatechIdChange(invoice_product)"
+                  >
+                    <option value="" selected disabled>Select Batech</option>
+                    <option
+                      v-for="batech in invoice_product.productBateches"
+                      :key="batech.uuid"
+                      :value="batech.uuid"
+                    >
+                      {{ batech.uuid }}
+                    </option>
+                  </select>
+                </td>
+                <td>
+                  <input
+                    type="number"
+                    class="form-control text-right"
+                    min="0"
+                    step=".01"
+                    v-model="invoice_product.price"
+                    @change="calculateLineTotal(invoice_product)"
+                  />
+                </td>
+                <td>
+                  <input
+                    type="number"
+                    class="form-control text-right"
+                    min="0"
+                    step=".01"
+                    v-model="invoice_product.qty"
+                    @change="calculateLineTotal(invoice_product)"
+                  />
+                </td>
+                <td>
+                  <input
+                    type="number"
+                    class="form-control"
+                    min="0"
+                    step=".01"
+                    v-model="invoice_product.total"
+                    readonly
+                  />
+                </td>
+                <td>
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-danger"
+                    v-on:click="deleteRow(k, invoice_product)"
+                  >
+                    <i class="fa fa-trash"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="5" class="text-end">Subtotal:</td>
+                <td>
+                  <input
+                    type="number"
+                    class="form-control"
+                    min="0"
+                    step=".01"
+                    v-model="invoice_subtotal"
+                    readonly
+                  />
+                </td>
+                <td></td>
+              </tr>
+              <tr>
+                <td colspan="5" class="text-end">Total:</td>
+                <td>
+                  <input
+                    type="number"
+                    class="form-control"
+                    min="0"
+                    step=".01"
+                    v-model="invoice_total"
+                    readonly
+                  />
+                </td>
+                <td></td>
+              </tr>
+            </tfoot>
+          </table>
+          <div class="form-group mt-2 text-end">
+            <button class="btn btn-primary" v-on:click="createProductBuy()">
+              Submit
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
@@ -231,6 +238,38 @@ export default {
       inv_total = (total * this.invoice_tax) / 100 + total;
       this.invoice_total = inv_total;
       //   return total;
+    },
+    async createProductBuy() {
+      // alert("Are you sure you want to create product buy?");
+      try {
+        //this declear for save single input fiels and array data
+        const createProductBuy = {
+          sub_total: this.invoice_subtotal,
+          total: this.invoice_total,
+          productItems: this.invoice_products,
+        };
+        //
+        let res = await axios.post("/api/products/buy", createProductBuy);
+        toastr.success("Product buy created successfully");
+        this.invoice_products = [
+          {
+            product_id: "",
+            batech_id: "",
+            product_no: "",
+            product_name: "",
+            price: "",
+            qty: "",
+            total: 0,
+          },
+        ];
+        this.invoice_subtotal = 0;
+        this.invoice_total = 0;
+      } catch (error) {
+        let errors = error.response.data.errors;
+        for (let key in errors) {
+          toastr.error(errors[key]);
+        }
+      }
     },
   },
 };

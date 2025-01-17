@@ -4,14 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Product extends Model
+class ProductBuy extends Model
 {
-    protected $fillable = ['product_name'];
+    protected $fillable = ['uuid', 'sub_total', 'total'];
 
     public function productBuyItems()
     {
         return $this->hasMany(ProductBuyItem::class);
     }
-
-    
 }

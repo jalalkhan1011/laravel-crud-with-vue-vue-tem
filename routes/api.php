@@ -1,7 +1,8 @@
 <?php
 
 use App\Http\Controllers\PostController;
-use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProductBuyController;
+use App\Http\Controllers\ProductController; 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,3 +18,4 @@ Route::delete('/posts/{id}', [PostController::class, 'destroy']);
 Route::get('/products', [ProductController::class, 'index']);
 Route::get('/products/bateches/{id}', [ProductController::class, 'producBatche']);
 Route::get('/products/details/{batchId}', [ProductController::class, 'productDetails']);
+Route::post('/products/buy',[ProductBuyController::class, 'store']);
