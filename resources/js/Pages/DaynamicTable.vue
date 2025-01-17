@@ -243,13 +243,13 @@ export default {
       // alert("Are you sure you want to create product buy?");
       try {
         //this declear for save single input fiels and array data
-        const createProductBuy = {
+        const productBuy = {
           sub_total: this.invoice_subtotal,
           total: this.invoice_total,
           productItems: this.invoice_products,
         };
         //
-        let res = await axios.post("/api/products/buy", createProductBuy);
+        let res = await axios.post("/api/products/buy", productBuy);
         toastr.success("Product buy created successfully");
         this.invoice_products = [
           {
