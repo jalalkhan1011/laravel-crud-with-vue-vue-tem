@@ -15,13 +15,17 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::all();
+        $productBateches = ProductPurchase::all();
 
-        return response(['status' => 'success', 'products' => $products, 'code' => '200']);
+
+        return response(['status' => 'success', 'products' => $products, 'productBateches' => $productBateches, 'code' => '200']);
     }
+
 
     public function producBatche($id)
     {
         $productBateches = ProductPurchase::where('id', $id)->get();
+        // dd($productBateches);
 
         return response(['status' => 'success', 'productBateches' => $productBateches, 'code' => '200']);
     }
@@ -29,7 +33,7 @@ class ProductController extends Controller
     public function productDetails($batchId)
     {
 
-        $product = ProductPurchase::where('uuid', $batchId)->first();
+        $product = ProductPurchase::where('id', $batchId)->first();
 
         return response(['status' => 'success', 'product' => $product, 'code' => '200']);
     }

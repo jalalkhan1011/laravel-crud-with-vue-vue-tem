@@ -18,4 +18,6 @@ Route::delete('/posts/{id}', [PostController::class, 'destroy']);
 Route::get('/products', [ProductController::class, 'index']);
 Route::get('/products/bateches/{id}', [ProductController::class, 'producBatche']);
 Route::get('/products/details/{batchId}', [ProductController::class, 'productDetails']);
+Route::get('/products/buy', [ProductBuyController::class, 'index']);
 Route::post('/products/buy',[ProductBuyController::class, 'store']);
+Route::get('/products/buy/{id}/edit', [ProductBuyController::class, 'edit']);

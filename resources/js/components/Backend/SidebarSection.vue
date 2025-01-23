@@ -29,8 +29,8 @@
           >
             <nav class="sb-sidenav-menu-nested nav">
               <router-link class="nav-link" :to="{ name: 'post' }">Post</router-link>
-              <router-link class="nav-link" :to="{ name: 'daynamicTable' }"
-                >Daynamic table</router-link
+              <router-link class="nav-link" :to="{ name: 'productPurchase' }"
+                >Product purchase</router-link
               >
             </nav>
           </div>

@@ -51,14 +51,14 @@
                 <td>
                   <select
                     class="form-select"
-                    v-model="invoice_product.batech_id"
+                    v-model="invoice_product.product_purchase_id"
                     @change="productBatechIdChange(invoice_product)"
                   >
                     <option value="" selected disabled>Select Batech</option>
                     <option
-                      v-for="batech in invoice_product.productBateches"
-                      :key="batech.uuid"
-                      :value="batech.uuid"
+                      v-for="batech in productBateches"
+                      :key="batech.id"
+                      :value="batech.id"
                     >
                       {{ batech.uuid }}
                     </option>
@@ -80,7 +80,7 @@
                     class="form-control text-right"
                     min="0"
                     step=".01"
-                    v-model="invoice_product.qty"
+                    v-model="invoice_product.quantity"
                     @change="calculateLineTotal(invoice_product)"
                   />
                 </td>
@@ -150,7 +150,7 @@
 import axios from "axios";
 import toastr from "toastr";
 export default {
-  name: "Produts",
+  name: "Products",
   data() {
     return {
       products: [],
@@ -162,11 +162,11 @@ export default {
       invoice_products: [
         {
           product_id: "",
-          batech_id: "",
+          product_purchase_id: "",
           product_no: "",
           product_name: "",
           price: "",
-          qty: "",
+          quantity: "",
           total: 0,
         },
       ],
@@ -180,6 +180,7 @@ export default {
     async getProducts() {
       let pro = await axios.get("/api/products");
       this.products = pro.data.products;
+      this.productBateches = pro.data.productBateches;
     },
     //daynamacally append proudct batech select option for every product wise id
     async productIdChange(invoice_product) {
@@ -192,7 +193,7 @@ export default {
 
     // data append daynamically product it wise( user table index and product uuid for every daynamic data append)
     async productBatechIdChange(invoice_product) {
-      let batechId = invoice_product.batech_id;
+      let batechId = invoice_product.product_purchase_id;
 
       let productDetails = await axios.get("/api/products/details/" + batechId);
 
@@ -204,9 +205,10 @@ export default {
       //   alert("Are you sure you want to add a new row?");
       this.invoice_products.push({
         product_no: "",
+        product_purchase_id: "",
         product_name: "",
         price: "",
-        qty: "",
+        quantity: "",
         total: 0,
       });
     },
@@ -223,7 +225,7 @@ export default {
     calculateLineTotal() {
       //   alert("Are you sure you want to calculate line total?");
       this.invoice_products.forEach((invoice_product) => {
-        invoice_product.total = invoice_product.price * invoice_product.qty;
+        invoice_product.total = invoice_product.price * invoice_product.quantity;
       });
       this.calculateTotal();
     },
@@ -254,11 +256,11 @@ export default {
         this.invoice_products = [
           {
             product_id: "",
-            batech_id: "",
+            product_purchase_id: "",
             product_no: "",
             product_name: "",
             price: "",
-            qty: "",
+            quantity: "",
             total: 0,
           },
         ];

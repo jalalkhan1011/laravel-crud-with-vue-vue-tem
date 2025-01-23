@@ -14,7 +14,10 @@ class ProductBuyController extends Controller
      */
     public function index()
     {
-        //
+        $productBuys = ProductBuy::all();
+        // dd($productBuys);
+
+        return response(['status' => 'success', 'productBuys' => $productBuys, 'code' => '200']);
     }
 
     /**
@@ -30,6 +33,7 @@ class ProductBuyController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->all());
         $data = [
             'uuid' => uniqid(),
             'sub_total' => $request->sub_total,
@@ -41,7 +45,7 @@ class ProductBuyController extends Controller
                 'uuid' => uniqid(),
                 'product_buy_id' => $productBuy->id,
                 'product_id' => $productItem['product_id'],
-                'batech_id' => $productItem['batech_id'],
+                'product_purchase_id' => $productItem['product_purchase_id'],
                 'quantity' => $productItem['qty'],
                 'price' => $productItem['price'],
                 'total' => $productItem['total'],
@@ -62,9 +66,12 @@ class ProductBuyController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(ProductBuy $productBuy)
+    public function edit($id)
     {
-        //
+        $product = ProductBuy::find($id);
+        $productItems = ProductBuyItem::where('product_buy_id', $id)->get();
+        // dd($productItems);
+        return response(['status' => 'success', 'product' => $product, 'productItems' => $productItems, 'code' => '200']);
     }
 
     /**

@@ -12,4 +12,9 @@ class ProductPurchase extends Model
     {
         return $this->belongsTo(Product::class, 'product_id');
     }
+
+    public function produtBuyItems()
+    {
+        return $this->hasMany(ProductBuyItem::class);
+    }
 }
