@@ -137,7 +137,7 @@
             </tfoot>
           </table>
           <div class="form-group mt-2 text-end">
-            <button class="btn btn-primary" v-on:click="createProductBuy()">
+            <button class="btn btn-primary" v-on:click="updateProductBuy()">
               Submit
             </button>
           </div>
@@ -241,7 +241,7 @@ export default {
       this.invoice_total = inv_total;
       //   return total;
     },
-    async createProductBuy() {
+    async updateProductBuy() {
       // alert("Are you sure you want to create product buy?");
       try {
         //this declear for save single input fiels and array data

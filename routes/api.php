@@ -21,3 +21,5 @@ Route::get('/products/details/{batchId}', [ProductController::class, 'productDet
 Route::get('/products/buy', [ProductBuyController::class, 'index']);
 Route::post('/products/buy',[ProductBuyController::class, 'store']);
 Route::get('/products/buy/{id}/edit', [ProductBuyController::class, 'edit']);
+Route::put('/products/buy/{id}', [ProductBuyController::class, 'update']);
+Route::post('/products/buy/{id}',[ProductBuyController::class,'deleteRow']);

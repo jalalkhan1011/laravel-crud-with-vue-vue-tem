@@ -26,17 +26,13 @@
             <tbody>
               <tr v-for="(invoice_product, k) in invoice_products" :key="k">
                 <td>
-                  <input
-                    type="text"
-                    class="form-control"
-                    v-model="invoice_product.product_no"
-                  />
+                  <input type="text" class="form-control" v-model="invoice_product.id" />
                 </td>
                 <td>
                   <select
                     class="form-select"
                     v-model="invoice_product.product_id"
-                    @change="productIdChange(invoice_product)"
+                    @change="productIdChange(invoice_product, k)"
                   >
                     <option value="" selected disabled>Select Product</option>
                     <option
@@ -56,7 +52,7 @@
                   >
                     <option value="" selected disabled>Select Batech</option>
                     <option
-                      v-for="batech in productBateches"
+                      v-for="batech in productBateches[k]"
                       :key="batech.id"
                       :value="batech.id"
                     >
@@ -137,7 +133,7 @@
             </tfoot>
           </table>
           <div class="form-group mt-2 text-end">
-            <button class="btn btn-primary" v-on:click="createProductBuy()">
+            <button class="btn btn-primary" v-on:click="updateProductBuy()">
               Submit
             </button>
           </div>
@@ -176,6 +172,9 @@ export default {
   mounted() {
     this.getProducts();
     this.getPurchaseProduct(this.$route.params.id);
+    this.invoice_products.forEach((invoice_product, k) => {
+      this.productIdChange(invoice_product, k);
+    });
   },
   methods: {
     async getProducts() {
@@ -184,12 +183,20 @@ export default {
       this.productBateches = pro.data.productBateches;
     },
     //daynamacally append proudct batech select option for every product wise id
-    async productIdChange(invoice_product) {
+    // async productIdChange(invoice_product) {
+    //   let produtId = invoice_product.product_id;
+
+    //   let productBatech = await axios.get("/api/products/bateches/" + produtId);
+
+    //   invoice_product.productBateches = productBatech.data.productBateches;
+    // },
+    async productIdChange(invoice_product, k) {
       let produtId = invoice_product.product_id;
 
       let productBatech = await axios.get("/api/products/bateches/" + produtId);
 
-      invoice_product.productBateches = productBatech.data.productBateches;
+      // invoice_product.productBateches = productBatech.data.productBateches;
+      this.productBateches[k] = productBatech.data.productBateches;
     },
 
     // data append daynamically product it wise( user table index and product uuid for every daynamic data append)
@@ -201,6 +208,7 @@ export default {
       console.log(productDetails);
       invoice_product.price = productDetails.data.product.price;
     },
+
     //daynamic table row
     addNewRow() {
       //   alert("Are you sure you want to add a new row?");
@@ -214,15 +222,23 @@ export default {
       });
     },
 
-    deleteRow(index, invoice_product) {
+    async deleteRow(index, invoice_product) {
       //   alert("Are you sure you want to delete this row?");
-      var idx = this.invoice_products.indexOf(invoice_product);
-      console.log(idx, index);
-      if (idx > -1) {
-        this.invoice_products.splice(idx, 1);
-      }
+      let buyItemId = invoice_product.id;
+      // alert(buyItemId);
+      axios.post(`/api/products/buy/${buyItemId}`).then((res) => {
+        toastr.success("Product buy delete successfully");
+      });
+
+      // var idx = this.invoice_products.indexOf(invoice_product);
+      // console.log(idx, index);
+      // if (idx > -1) {
+      this.invoice_products.splice(index, 1);
+      // }
+      // this.invoice_products.splice(index, 1);
       this.calculateTotal();
     },
+
     calculateLineTotal() {
       //   alert("Are you sure you want to calculate line total?");
       this.invoice_products.forEach((invoice_product) => {
@@ -248,7 +264,7 @@ export default {
       this.invoice_subtotal = res.data.product.sub_total;
       this.invoice_total = res.data.product.total;
     },
-    async createProductBuy() {
+    async updateProductBuy() {
       // alert("Are you sure you want to create product buy?");
       try {
         //this declear for save single input fiels and array data
@@ -258,8 +274,11 @@ export default {
           productItems: this.invoice_products,
         };
         //
-        let res = await axios.post("/api/products/buy", productBuy);
-        toastr.success("Product buy created successfully");
+        let res = await axios.put(
+          `/api/products/buy/${this.$route.params.id}`,
+          productBuy
+        );
+        toastr.success("Product buy update successfully");
         this.invoice_products = [
           {
             product_id: "",
