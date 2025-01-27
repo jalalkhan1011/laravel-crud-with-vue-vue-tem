@@ -175,6 +175,7 @@ export default {
     this.invoice_products.forEach((invoice_product, k) => {
       this.productIdChange(invoice_product, k);
     });
+    this.recalculateValues();
   },
   methods: {
     async getProducts() {
@@ -230,13 +231,20 @@ export default {
         toastr.success("Product buy delete successfully");
       });
 
-      // var idx = this.invoice_products.indexOf(invoice_product);
-      // console.log(idx, index);
-      // if (idx > -1) {
-      this.invoice_products.splice(index, 1);
-      // }
+      var idx = this.invoice_products.indexOf(invoice_product);
+      console.log(idx, index);
+      if (idx > -1) {
+        this.invoice_products.splice(index, 1);
+        this.recalculateValues;
+      }
       // this.invoice_products.splice(index, 1);
       this.calculateTotal();
+    },
+
+    recalculateValues() {
+      this.total = this.invoice_products.reduce((sum, invoice_product) => {
+        return sum + invoice_product.price * invoice_product.quantity;
+      }, 0);
     },
 
     calculateLineTotal() {
