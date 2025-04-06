@@ -64,3 +64,13 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+#######
+vu crud for laravel
+package to be install
+1. npm i
+2. npm install vue-loader@next
+3. npm i @vitejs/plugin-vue
+4. npm install vue-router@latest
+
+https://chapimaster.com/laravel-10-and-vue-js-crud-tutorial-building-a-full-stack-app-with-vite
